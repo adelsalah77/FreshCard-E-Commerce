@@ -1,0 +1,143 @@
+<nav class="bg-gray-100 fixed w-full z-20 top-0 start-0 border-b border-default">
+  <div class="w-11/12 flex flex-wrap items-center justify-between mx-auto py-3 pb-3 px-0">
+    <a [routerLink]="['home']" class="flex items-center space-x-3 rtl:space-x-reverse">
+      <img src="images/freshcart-logo.svg" class="h-7" alt="freshcart-logo" />
+      <span class="self-center text-xl text-heading font-semibold whitespace-nowrap"></span>
+    </a>
+    <div class="inline-flex justify-between md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+      <ul class="flex items-center md:gap-x-0 lg:gap-x-3">
+        <li>
+          <a href="#" class="px-[1px]"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" class="px-[1px]"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" class="px-[1px]"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="px-[1px]"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="px-[1px]"><i class="fa-brands fa-youtube"></i></a>
+        </li>
+        @if (!isLogin) {
+          <li>
+            <a
+              [routerLink]="['register']"
+              routerLinkActive="text-green-600"
+              class="block px-1 md:py-2 md:px-1 text-black rounded md:p-0"
+              aria-current="page"
+              >Register</a
+            >
+          </li>
+          <li>
+            <a
+              [routerLink]="['login']"
+              routerLinkActive="text-green-600"
+              class="block px-1 md:py-2 md:px-1 text-black md:p-0"
+              aria-current="page"
+              >Login</a
+            >
+          </li>
+        } @else {
+          <button
+            type="button"
+            class="relative text-white bg-green-700 box-border border border-transparent hover:bg-green-900 focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm p-3 focus:outline-none"
+          >
+            <i class="fas fa-cart-shopping"></i>
+            <span class="sr-only">Notifications</span>
+            <div
+              class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-danger border-2 border-buffer rounded-full -top-2 -end-2"
+            >
+              {{ cartItem() }}
+            </div>
+          </button>
+
+          <li>
+            <a
+              (click)="authService.logOut()"
+              class="cursor-pointer block px-1 md:py-2 md:px-1 text-black md:p-0"
+              aria-current="page"
+              >Logout</a
+            >
+          </li>
+        }
+      </ul>
+
+      <button
+        data-collapse-toggle="navbar-cta"
+        type="button"
+        class="inline-flex items-center p-0 w-6 h-9 justify-end text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
+        aria-controls="navbar-cta"
+        aria-expanded="false"
+      >
+        <span class="sr-only">Open main menu</span>
+        <svg
+          class="w-6 h-6"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-width="2"
+            d="M5 7h14M5 12h14M5 17h14"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+      id="navbar-cta"
+    >
+      <ul
+        class="font-medium flex flex-col p-1 md:p-0 mt-2 border border-default rounded-base md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0"
+      >
+        <li>
+          <a
+            [routerLink]="['home']"
+            routerLinkActive="text-green-600"
+            class="block py-2 px-1 text-black rounded md:p-0"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        @if (isLogin) {
+          <li>
+            <a
+              [routerLink]="['cart']"
+              routerLinkActive="text-green-600"
+              class="block py-2 px-1 text-black rounded md:p-0"
+              aria-current="page"
+              >Cart</a
+            >
+          </li>
+        }
+        <li>
+          <a
+            [routerLink]="['products']"
+            routerLinkActive="text-green-600"
+            class="block py-2 px-1 text-black rounded md:p-0"
+            aria-current="page"
+            >Products</a
+          >
+        </li>
+        <li>
+          <a
+            [routerLink]="['categories']"
+            routerLinkActive="text-green-600"
+            class="block py-2 px-1 text-black rounded md:p-0"
+            aria-current="page"
+            >Categories</a
+          >
+        </li>
+        <li>
+          <a
+            [routerLink]="['brands']"
+            routerLinkActive="text-green-600"
+            class="block py-2 px-1 text-black rounded md:p-0"
+            aria-current="page"
+            >Brands</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

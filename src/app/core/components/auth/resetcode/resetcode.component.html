@@ -1,0 +1,51 @@
+@if (resetCodeFlag) {
+  <section class="w-3/4 mx-auto mt-5">
+    <h1 class="font-medium mb-5 text-lg text-green-700">Reset Password :</h1>
+
+    @if (errMsg()) {
+      <div class="p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft" role="alert">
+        {{ errMsg() }}
+      </div>
+    }
+    <form [formGroup]="resetCodeForm" (ngSubmit)="submitResetCodeForm()">
+      <div class="mb-5">
+        <label for="resetCode" class="block mb-1 text-sm font-medium text-heading"
+          >reset code:</label
+        >
+        <input
+          type="text"
+          id="resetCode"
+          formControlName="resetCode"
+          class="bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-green-700 focus:border-green-700 block w-full px-3 py-2.5 shadow-xs placeholder:text-body"
+        />
+        @if (resetCodeForm.get('resetCode')?.errors && resetCodeForm.get('resetCode')?.touched) {
+          <div
+            class="p-4 mb-4 text-sm text-fg-danger-strong rounded-base bg-danger-soft"
+            role="alert"
+          >
+            @if (resetCodeForm.get('resetCode')?.errors?.['required']) {
+              <p>reset code is required</p>
+            } @else if (resetCodeForm.get('resetCode')?.errors?.['pattern']) {
+              <p>reset code must be 4 digits</p>
+            }
+          </div>
+        }
+      </div>
+
+      <button
+        [disabled]="resetCodeForm.invalid"
+        class="btn-main block ms-auto hover:cursor-pointer"
+      >
+        @if (isLoding()) {
+          <span><i class="fas fa-spinner animate-spin"></i></span>
+        } @else {
+          <span>Submit</span>
+        }
+      </button>
+    </form>
+  </section>
+}
+
+@if (resetNewPasswordFlag) {
+  <app-resetnewpassword></app-resetnewpassword>
+}

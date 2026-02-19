@@ -1,0 +1,29 @@
+@if (product()) {
+  <div
+    class="bg-neutral-primary-soft cursor-pointer group overflow-hidden block p-3 pb-0 border border-default rounded-base shadow-xs"
+  >
+    <div [routerLink]="['/productdetails', product().id]">
+      <img class="rounded-base" [src]="product().imageCover" [alt]="product().title" />
+
+      <div class="mt-6 mb-2">
+        <span class="text-xs text-green-700">{{ product().category.name }}</span>
+        <h2 class="text-base font-semibold tracking-tight text-heading">
+          {{ product().title.split(' ').slice(0, 2).join(' ') }}...
+        </h2>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-600">{{ product().price }} EGP</span>
+        <span class="text-xs text-gray-600"
+          ><i class="fa-solid fa-star text-yellow-400"></i> {{ product().ratingsAverage }}</span
+        >
+      </div>
+    </div>
+    <button
+      (click)="addproducttoCart(product().id)"
+      class="w-full py-1 text-xs font-medium cursor-pointer group-hover:translate-y-0 duration-300 translate-y-full text-white bg-green-700 rounded"
+    >
+      Add to Cart
+    </button>
+  </div>
+}
