@@ -17,24 +17,11 @@ import { WishlistComponent } from './core/features/wishlist/wishlist/wishlist.co
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent, title: 'Home' },
-
-  // Pages with dynamic parameters: render client-side only
-  {
-    path: 'shippingaddress/:id',
-    component: ShippingaddressComponent,
-    title: 'Shipping Address',
-    data: { renderMode: 'client' },
-  },
-  {
-    path: 'productdetails/:id',
-    component: ProductdetailsComponent,
-    title: 'Product Details',
-    data: { renderMode: 'client' },
-  },
-
+  { path: 'shippingaddress/:id', component: ShippingaddressComponent, title: 'Shipping Address' },
   { path: 'allorders', component: AllOrdersComponent, title: 'All Orders' },
   { path: 'cart', canActivate: [authGuard], component: CartComponent, title: 'Cart' },
   { path: 'products', component: ProductsComponent, title: 'Products' },
+  { path: 'productdetails/:id', component: ProductdetailsComponent, title: 'Product Details' },
   { path: 'forgetpassword', component: ForgetpasswordComponent, title: 'Forget Password' },
   { path: 'categories', component: CategoriesComponent, title: 'Categories' },
   { path: 'brands', component: BrandsComponent, title: 'Brands' },
