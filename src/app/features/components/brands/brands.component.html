@@ -1,1 +1,18 @@
-<p>brands works!</p>
+<div class="container mx-auto bg-gray-100 mb-3 px-4 py-8">
+  <h2 class="text-3xl font-bold mb-8 text-green-700">Shop by Brands</h2>
+
+  @if (loading()) {
+    <p>Loading...</p>
+  } @else {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      @for (brand of brands(); track brand._id) {
+        <div
+          class="bg-white rounded-xl shadow hover:shadow-lg transition cursor-pointer p-4 flex items-center justify-center"
+          (click)="openBrand(brand._id)"
+        >
+          <img [src]="brand.image" class="h-24 object-contain" alt="{{ brand.name }}" />
+        </div>
+      }
+    </div>
+  }
+</div>

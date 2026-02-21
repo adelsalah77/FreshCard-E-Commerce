@@ -1,1 +1,26 @@
-<p>categories works!</p>
+<div class="container mx-auto bg-gray-100 mb-4 px-4 py-6">
+  <h2 class="text-2xl font-bold mb-6 text-center py-4 text-green-700">Shop by Categories</h2>
+
+  <!-- Loading -->
+  @if (loading()) {
+    <div class="text-center text-lg">Loading categories...</div>
+  }
+
+  <!-- Categories Grid -->
+  <section class="grid gap-6 lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
+    @for (cat of categories(); track cat._id) {
+      <a
+        [routerLink]="['/products']"
+        class="block border rounded-xl overflow-hidden shadow hover:shadow-xl transition bg-gray-100"
+      >
+        <img [src]="cat.image" [alt]="cat.name" class="w-full h-48 object-cover" />
+
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-semibold text-green-700">
+            {{ cat.name }}
+          </h3>
+        </div>
+      </a>
+    }
+  </section>
+</div>

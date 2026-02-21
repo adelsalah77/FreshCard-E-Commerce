@@ -1,1 +1,62 @@
-<p>products works!</p>
+<div class="container mx-auto px-4 py-8">
+  <!-- Search + Sort -->
+  <div class="flex flex-col md:flex-row gap-4 justify-between mb-8">
+    <!-- Search -->
+    <input
+      type="text"
+      placeholder="Search products..."
+      [ngModel]="search()"
+      (ngModelChange)="search.set($event)"
+      (keyup.enter)="onSearch()"
+      class="border rounded px-4 py-2 w-full md:w-1/2 focus:border-green-600"
+    />
+
+    <!-- Sort -->
+    <select
+      (change)="changeSort($any($event.target).value)"
+      class="bg-white border border-gray-300 rounded p-2 focus:outline-none focus:ring-2 focus:ring-green-500 hover:border-green-400"
+    >
+      <option value="default">Sort By</option>
+      <option value="priceLow">Price: Low → High</option>
+      <option value="priceHigh">Price: High → Low</option>
+      <option value="rating">Top Rated</option>
+    </select>
+  </div>
+
+  <!-- Loading State -->
+  @if (loading()) {
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      @for (i of [1, 2, 3]; track i) {
+        <div class="h-64 bg-gray-200 animate-pulse rounded"></div>
+      }
+    </div>
+  } @else {
+    <!-- Products Grid -->
+    <section class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+      @for (item of products(); track item._id) {
+        <app-productcard [product]="item"></app-productcard>
+      }
+    </section>
+
+    <!-- Pagination -->
+    <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+      <button
+        (click)="prevPage()"
+        [disabled]="currentPage() === 1"
+        class="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+      >
+        Previous
+      </button>
+
+      <span class="font-semibold"> Page {{ currentPage() }} of {{ totalPages() }} </span>
+
+      <button
+        (click)="nextPage()"
+        [disabled]="currentPage() === totalPages()"
+        class="px-4 py-2 bg-green-700 text-white rounded disabled:opacity-50"
+      >
+        Next
+      </button>
+    </div>
+  }
+</div>

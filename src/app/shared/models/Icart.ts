@@ -35,3 +35,9 @@ export interface Product2 {
   ratingsAverage: number;
   id: string;
 }
+
+export interface ShippingAddresData {
+  details: string;
+  phone: number;
+  city: string;
+}

@@ -31,7 +31,7 @@ export class ProductdetailsComponent implements OnInit {
   toastr = inject(ToastrService);
 
   addproducttoCart(productId: string) {
-    this.cartService.addproducttoCart(productId).subscribe((res) => {
+    this.cartService.addproducttoCart(productId).subscribe((res: any) => {
       this.toastr.success(res.message, '', { timeOut: 3000, progressBar: true });
     });
   }

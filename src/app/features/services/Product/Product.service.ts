@@ -8,10 +8,14 @@ import { AllproductsResponse, Product } from '../../../shared/models/Iproducts';
   providedIn: 'root',
 })
 export class ProductService {
+  productService: any;
+  productlist: any;
+  currentPage: any;
+  numberOfPages: any;
   constructor(private httpClient: HttpClient) {}
 
-  getAllProducts(): Observable<AllproductsResponse> {
-    return this.httpClient.get<AllproductsResponse>(`${Environment.baseUrl}/api/v1/products`);
+  getAllProducts(page: number = 1): Observable<any> {
+    return this.httpClient.get(`${Environment.baseUrl}/api/v1/products?page=${page}&limit=20`);
   }
 
   getspasificProduct(productId: string): Observable<{ data: Product }> {

@@ -1,10 +1,11 @@
 import { CartData } from '../../../shared/models/Icart';
 import { CartService } from './../../services/cart/cart.service';
 import { Component, inject, OnInit, signal, WritableSignal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss',
 })

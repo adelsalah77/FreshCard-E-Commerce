@@ -13,6 +13,7 @@ export class HomeSliderComponent {
     mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
+    rtl: true,
     dots: true,
     navSpeed: 700,
     navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],

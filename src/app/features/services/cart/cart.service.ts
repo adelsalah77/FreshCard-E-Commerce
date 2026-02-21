@@ -1,8 +1,9 @@
-import { CheckPlateFormService } from './../../../shared/services/checkPlateForm/check-plate-form.service';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { CheckPlateFormService } from './../../../shared/services/checkPlateForm/check-plate-form.service';
 import { Environment } from '../../../../environment/environment';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Product } from '../../../shared/models/Iproducts';
 import { cartResponse } from '../../../shared/models/Icart';
 
 @Injectable({
@@ -10,8 +11,9 @@ import { cartResponse } from '../../../shared/models/Icart';
 })
 export class CartService {
   noOfCartItems: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  checkPlateFormService: CheckPlateFormService = inject(CheckPlateFormService);
+  private cartProducts: Product[] = [];
 
+  checkPlateFormService: CheckPlateFormService = inject(CheckPlateFormService);
   httpclient: HttpClient = inject(HttpClient);
 
   constructor() {
@@ -19,56 +21,61 @@ export class CartService {
       this.getLoggedUserCart().subscribe({
         next: (res) => {
           this.noOfCartItems.next(res.numOfCartItems);
-          console.log(this.noOfCartItems.getValue);
         },
       });
     }
   }
 
-  addproducttoCart(productId: string): Observable<any> {
+  getCartProducts(): Product[] {
+    return this.cartProducts.length
+      ? this.cartProducts
+      : JSON.parse(localStorage.getItem('cartProducts') || '[]');
+  }
+
+  setCartProducts(products: Product[]) {
+    this.cartProducts = products;
+    this.noOfCartItems.next(products.length);
+    localStorage.setItem('cartProducts', JSON.stringify(products));
+  }
+
+  clearLocalCart() {
+    this.cartProducts = [];
+    this.noOfCartItems.next(0);
+    localStorage.removeItem('cartProducts');
+  }
+
+  addproducttoCart(productId: string) {
     return this.httpclient.post(
       `${Environment.baseUrl}/api/v1/cart`,
-      {
-        productId: productId,
-      },
-      {
-        headers: {
-          token: localStorage.getItem('userToken')!,
-        },
-      },
+      { productId },
+      { headers: { token: localStorage.getItem('userToken')! } }
     );
   }
 
-  getLoggedUserCart(): Observable<cartResponse> {
+  getLoggedUserCart() {
     return this.httpclient.get<cartResponse>(`${Environment.baseUrl}/api/v1/cart`, {
-      headers: {
-        token: localStorage.getItem('userToken') || '',
-      },
+     
     });
   }
 
-  updateProductCartCount(procuctId: string, count: string): Observable<cartResponse> {
-    return this.httpclient.put<cartResponse>(`${Environment.baseUrl}/api/v1/cart/${procuctId}`, {
-      count: count,
-      headers: {
-        token: localStorage.getItem('userToken') || '',
-      },
-    });
+  updateProductCartCount(productId: string, count: string) {
+    return this.httpclient.put<cartResponse>(
+      `${Environment.baseUrl}/api/v1/cart/${productId}`,
+      { count },
+      
+    );
   }
 
-  removeSpecificProductFromCart(procuctId: string): Observable<cartResponse> {
-    return this.httpclient.delete<cartResponse>(`${Environment.baseUrl}/api/v1/cart/${procuctId}`, {
-      headers: {
-        token: localStorage.getItem('userToken') || '',
-      },
-    });
+  removeSpecificProductFromCart(productId: string) {
+    return this.httpclient.delete<cartResponse>(
+      `${Environment.baseUrl}/api/v1/cart/${productId}`,
+     
+    );
   }
 
-  clearCart(): Observable<any> {
+  clearCart() {
     return this.httpclient.delete(`${Environment.baseUrl}/api/v1/cart`, {
-      headers: {
-        token: localStorage.getItem('userToken') || '',
-      },
+      
     });
   }
 }

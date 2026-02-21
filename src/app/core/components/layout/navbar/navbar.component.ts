@@ -14,30 +14,30 @@ import { AuthService } from '../../../services/auth/auth.service';
 export class NavbarComponent implements OnInit {
   cartItem: WritableSignal<number> = signal<number>(0);
   isLogin: boolean = false;
+
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
   constructor(
     private flowbiteService: FlowbiteService,
     public authService: AuthService,
     public cartService: CartService,
   ) {
     effect(() => {
-      if (this.authService.userData() != null) {
-        this.isLogin = true;
-      } else {
-        this.isLogin = false;
-      }
+      this.isLogin = this.authService.userData() != null;
     });
   }
 
   ngOnInit(): void {
-    this.flowbiteService.loadFlowbite((flowbite) => {
+    this.flowbiteService.loadFlowbite(() => {
       initFlowbite();
     });
 
     this.cartService.noOfCartItems.subscribe({
-      next: (data) => {
-        this.cartItem.set(data);
-        console.log(this.cartItem());
-      },
+      next: (data) => this.cartItem.set(data),
     });
   }
 }
